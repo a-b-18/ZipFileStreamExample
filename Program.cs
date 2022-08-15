@@ -21,22 +21,24 @@ namespace ByteToBitmap
 
             string fileContents = "Lorem ipsum dolor sit amet";
 
-            // Final zip file
+            // Create zip
             using (var fs = new FileStream("Export.zip", FileMode.OpenOrCreate))
             {
                 using (var archive = new ZipArchive(fs, ZipArchiveMode.Create, true))
                 {
 
-                    // Files in zip
-                    var file1 = archive.CreateEntry("File1.xml");
-                    using (var writer = new BinaryWriter(file1.Open()))
+                    // Create files in zip
+                    var file1 = archive.CreateEntry("File1.txt");
+                    using (var writer = new StreamWriter(file1.Open()))
                     {
-                        writer.Write(fileContents); // Change fileContents to real XML content
+                        // Write to file
+                        writer.Write(fileContents);
                     }
-                    var file2 = archive.CreateEntry("File2.xml");
-                    using (var writer = new BinaryWriter(file2.Open()))
+                    var file2 = archive.CreateEntry("File2.txt");
+                    using (var writer = new StreamWriter(file2.Open()))
                     {
-                        writer.Write(fileContents); // Change fileContents to real XML content
+                        // Write to file
+                        writer.Write(fileContents);
                     }
 
                 }
