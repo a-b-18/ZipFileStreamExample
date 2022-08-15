@@ -18,29 +18,31 @@ namespace ByteToBitmap
         [STAThread]
         static void Main()
         {
-
-            string fileContents = "Lorem ipsum dolor sit amet";
+            var files = new Dictionary<string, string>
+            {
+                {"File1.txt", "1 is the 1."},
+                {"File2.txt", "2 is the 2."},
+                {"File3.txt", "3 is the 3."},
+                {"File4.txt", "4 is the 4."},
+                {"File5.txt", "5 is the 5."},
+                {"File6.txt", "6 is the 6."},
+            };
 
             // Create zip
             using (var fs = new FileStream("Export.zip", FileMode.OpenOrCreate))
             {
                 using (var archive = new ZipArchive(fs, ZipArchiveMode.Create, true))
                 {
-
-                    // Create files in zip
-                    var file1 = archive.CreateEntry("File1.txt");
-                    using (var writer = new StreamWriter(file1.Open()))
+                    foreach (var file in files)
                     {
-                        // Write to file
-                        writer.Write(fileContents);
+                        // Create files in zip
+                        var file1 = archive.CreateEntry(file.Key);
+                        using (var writer = new StreamWriter(file1.Open()))
+                        {
+                            // Write to file
+                            writer.Write(file.Value);
+                        }
                     }
-                    var file2 = archive.CreateEntry("File2.txt");
-                    using (var writer = new StreamWriter(file2.Open()))
-                    {
-                        // Write to file
-                        writer.Write(fileContents);
-                    }
-
                 }
             }
         }
